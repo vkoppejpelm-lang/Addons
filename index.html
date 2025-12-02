@@ -1,0 +1,67 @@
+<html>
+    <title>ShardMC</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="img/icon.png">
+    <body>
+        <div class="top-bar">
+            <img src="img/icon.png" alt="Logo" draggable="false">
+            <h1 class="titulo" draggable="false">ShardMC</h1>
+        </div>
+
+        <div class="ver-mais" id="ver-mais">
+            <h3 class="sair-mais" onclick="sairVerMais()">X</h3>
+            <h1 class="titulo-mais">Titulo</h1>
+            <img src="img/icon.png" alt="foto base">
+            <a style="text-decoration: none; color: white;" href="https://minecraft.net"><h1 class="baixar">Baixar</h1></a>
+
+        </div>
+
+        <div class="scroll" id="scroll">
+            <h2 style="color: #200045;">nada</h2>
+            <h5 style="color: #200045;">nada</h5>
+            <div class="addom" id="template" onclick="entrarVerMais()">
+                <div class="addom-img-and-descri">
+                    <img class="miniatura" src="img/icon.png" alt="Base">
+                    <h5 class="descri">esse addon e um addon base by sac</h5>
+                </div>
+                <h3 class="title">Addom 1</h3>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        const elemento = document.getElementById("template");
+        const scroll = document.getElementById("scroll");
+
+        fetch("https://raw.githubusercontent.com/vkoppejpelm-lang/Addons/main/addons.json")
+          .then(response => response.json())
+          .then(addons => {
+            console.log(addons.length); // Saída: 3
+
+            // percorre a lista de addons
+            for (let i = 0; i < addons.length; i++) {
+              const clone = elemento.cloneNode(true);
+
+              // atualiza os dados do clone
+              clone.querySelector(".miniatura").src = addons[i].img;
+              clone.querySelector(".descri").textContent = addons[i].descri;
+              clone.querySelector(".title").textContent = addons[i].nome;
+
+              // adiciona na página
+              scroll.appendChild(clone);
+            }
+          })
+
+          .catch(err => console.error("Erro ao carregar:", err));
+            elemento.remove();
+
+            const verMais = document.getElementById("ver-mais")
+            function entrarVerMais() {
+                verMais.style.bottom = "0px"
+            }
+
+            function sairVerMais() {
+                verMais.style.bottom = "-350px"
+            }
+    </script>
+</html>
